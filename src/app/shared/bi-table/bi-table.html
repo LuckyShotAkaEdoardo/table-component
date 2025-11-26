@@ -1,0 +1,30 @@
+<div class="table-responsive">
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        @for (header of config.headers; track header.key) {
+        <th scope="col">{{ header.label }}</th>
+        }
+      </tr>
+    </thead>
+
+    <tbody>
+      @for (row of config.data; track row) {
+      <tr>
+        @for (header of config.headers; track header.key) {
+        <td>
+          @switch (getCellType(header)) { @case ('number') { {{
+          getCellValue(row, header.key) | number }} } @case ('date') { {{
+          getCellValue(row, header.key) | date:'dd/MM/yyyy' }} } @case ('badge')
+          {
+          <span class="badge bg-primary">
+            {{ getCellValue(row, header.key) }}
+          </span>
+          } @default { {{ getCellValue(row, header.key) }} } }
+        </td>
+        }
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
